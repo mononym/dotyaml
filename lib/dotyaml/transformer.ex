@@ -1,11 +1,11 @@
-defmodule Dotenvy.Transformer do
+defmodule Dotyaml.Transformer do
   @moduledoc """
   This module provides functionality for converting string values to specific Elixir data types.
 
   These conversions were designed to operate on system environment variables, which
   _always_ store string binaries.
   """
-  alias Dotenvy.Error
+  alias Dotyaml.Error
 
   @typedoc """
   The conversion type specifies the target data type to which a string will be converted.
@@ -93,7 +93,7 @@ defmodule Dotenvy.Transformer do
 
   ## Types
 
-  See the `t:Dotenvy.Transformer.conversion_type/0` for a description of valid
+  See the `t:Dotyaml.Transformer.conversion_type/0` for a description of valid
   conversion types.
 
   ## Examples
@@ -110,11 +110,15 @@ defmodule Dotenvy.Transformer do
       DateTime
       iex> to!("foo", fn val -> val <> "bar" end)
       "foobar"
-      iex> Dotenvy.Transformer.to!("Oops", :float)
-        ** (Dotenvy.Error) Unparsable as float
-        (dotenvy 1.0.0) lib/dotenvy/transformer.ex:165: Dotenvy.Transformer.to!/2
+      iex> Dotyaml.Transformer.to!("Oops", :float)
+        ** (Dotyaml.Error) Unparsable as float
+        (dotenvy 1.0.0) lib/dotenvy/transformer.ex:165: Dotyaml.Transformer.to!/2
   """
   @spec to!(str :: binary(), type :: conversion_type()) :: any()
+  def to!(value, type) when is_atom(value) and type in [:atom, :atom?, :atom!] do
+    value
+  end
+
   def to!(str, :atom) when is_binary(str) do
     str
     |> String.trim_leading(":")
@@ -122,9 +126,15 @@ defmodule Dotenvy.Transformer do
   end
 
   def to!("", :atom?), do: nil
+  def to!(nil, :atom?), do: nil
   def to!(str, :atom?), do: to!(str, :atom)
   def to!("", :atom!), do: raise(Error)
+  def to!(nil, :atom!), do: raise(Error)
   def to!(str, :atom!), do: to!(str, :atom)
+
+  def to!(value, type) when is_boolean(value) and type in [:boolean, :boolean?, :boolean!] do
+    value
+  end
 
   def to!(str, :boolean) when is_binary(str) do
     str
@@ -138,16 +148,24 @@ defmodule Dotenvy.Transformer do
   end
 
   def to!("", :boolean?), do: nil
+  def to!(nil, :boolean?), do: nil
   def to!(str, :boolean?), do: to!(str, :boolean)
   def to!("", :boolean!), do: raise(Error)
+  def to!(nil, :boolean!), do: raise(Error)
   def to!(str, :boolean!), do: to!(str, :boolean)
 
   def to!(str, :charlist) when is_binary(str), do: to_charlist(str)
 
   def to!("", :charlist?), do: nil
+  def to!(nil, :charlist?), do: nil
   def to!(str, :charlist?), do: to!(str, :charlist)
   def to!("", :charlist!), do: raise(Error)
+  def to!(nil, :charlist!), do: raise(Error)
   def to!(str, :charlist!), do: to!(str, :charlist)
+
+  def to!(value, type) when is_atom(value) and type in [:existing_atom, :existing_atom?, :existing_atom!] do
+    value
+  end
 
   def to!(str, :existing_atom) when is_binary(str) do
     str
@@ -158,9 +176,15 @@ defmodule Dotenvy.Transformer do
   end
 
   def to!("", :existing_atom?), do: nil
+  def to!(nil, :existing_atom?), do: nil
   def to!(str, :existing_atom?), do: to!(str, :existing_atom)
   def to!("", :existing_atom!), do: raise(Error)
+  def to!(nil, :existing_atom!), do: raise(Error)
   def to!(str, :existing_atom!), do: to!(str, :existing_atom)
+
+  def to!(value, type) when is_float(value) and type in [:float, :float?, :float!] do
+    value
+  end
 
   def to!("", :float), do: 0
 
@@ -175,9 +199,15 @@ defmodule Dotenvy.Transformer do
   end
 
   def to!("", :float?), do: nil
+  def to!(nil, :float?), do: nil
   def to!(str, :float?), do: to!(str, :float)
   def to!("", :float!), do: raise(Error)
+  def to!(nil, :float!), do: raise(Error)
   def to!(str, :float!), do: to!(str, :float)
+
+  def to!(value, type) when is_integer(value) and type in [:integer, :integer?, :integer!] do
+    value
+  end
 
   def to!("", :integer), do: 0
 
@@ -192,8 +222,10 @@ defmodule Dotenvy.Transformer do
   end
 
   def to!("", :integer?), do: nil
+  def to!(nil, :integer?), do: nil
   def to!(str, :integer?), do: to!(str, :integer)
   def to!("", :integer!), do: raise(Error)
+  def to!(nil, :integer!), do: raise(Error)
   def to!(str, :integer!), do: to!(str, :integer)
 
   def to!(str, :module) when is_binary(str) do
@@ -202,14 +234,18 @@ defmodule Dotenvy.Transformer do
   end
 
   def to!("", :module?), do: nil
+  def to!(nil, :module?), do: nil
   def to!(str, :module?), do: to!(str, :module)
   def to!("", :module!), do: raise(Error)
+  def to!(nil, :module!), do: raise(Error)
   def to!(str, :module!), do: to!(str, :module)
 
   def to!(str, :string) when is_binary(str), do: str
   def to!("", :string?), do: nil
+  def to!(nil, :string?), do: nil
   def to!(str, :string?) when is_binary(str), do: str
   def to!("", :string!), do: raise(Error)
+  def to!(nil, :string!), do: raise(Error)
   def to!(str, :string!) when is_binary(str), do: str
 
   def to!(str, callback) when is_function(callback, 1) do

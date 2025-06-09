@@ -1,4 +1,4 @@
-defmodule Dotenvy.FileCase do
+defmodule Dotyaml.FileCase do
   @moduledoc """
   Supports tests that need to load files from inside `test/support/files/`.
   To use this in a test, `use` this module and annotate your test functions
@@ -6,7 +6,7 @@ defmodule Dotenvy.FileCase do
   context argument, e.g.
 
       defmodule ExampleTest do
-        use Dotenvy.FileCase
+        use Dotyaml.FileCase
 
         @tag env_file: "a.env"
         test "something", %{contents: contents} do

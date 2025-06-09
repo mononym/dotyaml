@@ -41,7 +41,7 @@ Our `config/runtime.exs` will look something like the following. Note that the f
 
 ```elixir
 import Config
-import Dotenvy
+import Dotyaml
 
 # For local development, read dotenv files inside the envs/ dir;
 # for releases, read them at the RELEASE_ROOT

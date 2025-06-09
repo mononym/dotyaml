@@ -1,6 +1,6 @@
 # Getting Started
 
-The concept of environment variables is simple and `Dotenvy` aims to make your application take advantage of them, but how can you start using them easily in your application?  This page will walk you through kicking the tires of a simple application so you can learn how `Dotenvy` works.
+The concept of environment variables is simple and `Dotyaml` aims to make your application take advantage of them, but how can you start using them easily in your application?  This page will walk you through kicking the tires of a simple application so you can learn how `Dotyaml` works.
 
 > ## Prerequisite {: .info}
 >
@@ -56,7 +56,7 @@ Running `mix test` now passes!
 
 > ### Core Concept: variables are read from an environment-specific file {: .info}
 >
-> Just like with Elixir's regular config files, `Dotenvy` loads the appropriate
+> Just like with Elixir's regular config files, `Dotyaml` loads the appropriate
 > env file depending on your environment. Look at how the `config_env()` function
 > is used in `runtime.exs` to determine the file name; different values are
 > declared in the `.test.env` and `.dev.env`.
@@ -70,9 +70,9 @@ Next, let's try to access the environment variable directly:
 
 What happened? `Application.get_env(:example, :secret)` worked, so why doesn't `System.get_env("SECRET")` see the variable?
 
-The answer to this riddle is that `Dotenvy` is read-only: `Dotenvy` does not _set_ environment variables. This helps keep things locked down. It may be counter-intuitive, but `Dotenvy` doesn't even necessarily read environment variables!  _`Dotenvy` only reads the inputs you give it_. `Dotenvy` only reads environment variables if you pass it the output from `System.get_env()`.
+The answer to this riddle is that `Dotyaml` is read-only: `Dotyaml` does not _set_ environment variables. This helps keep things locked down. It may be counter-intuitive, but `Dotyaml` doesn't even necessarily read environment variables!  _`Dotyaml` only reads the inputs you give it_. `Dotyaml` only reads environment variables if you pass it the output from `System.get_env()`.
 
-> ### Core Concept: `Dotenvy` does not **set** ENV vars {: .info}
+> ### Core Concept: `Dotyaml` does not **set** ENV vars {: .info}
 >
 > Any variables you declare in your from in your `env` files are _not_ exported
 > back to the system; i.e. `System.put_env/2` is NOT called. In other words,
@@ -117,7 +117,7 @@ A good convention here is to have a default `.env` file loaded first which lists
 
 ## Type-casting
 
-All environment variables store string values. `Dotenvy.env!/2` and `Dotenvy.env!/3` have as their second argument an atom which determines how to convert the string value. For example, you may need to convert a `PORT` variable into an integer, other values may need to be booleans, and others may need to be atoms or modules.
+All environment variables store string values. `Dotyaml.env!/2` and `Dotyaml.env!/3` have as their second argument an atom which determines how to convert the string value. For example, you may need to convert a `PORT` variable into an integer, other values may need to be booleans, and others may need to be atoms or modules.
 
 There is some subtlety involved here when it comes to how empty values should be handled.
 
@@ -134,13 +134,13 @@ Let's modify the line in our `runtime.exs` and replace `:string!` with `:string`
 
 Now the application starts fine, even if the `PASSWORD` value is empty. Probably a password needs to have a value, so using `:string!` for the second argument is probably more appropriate, but you can decide this on a case-by-case basis.
 
-Understanding type-casting is another core concept in helping to leverage `Dotenvy` so  your app get what it needs to run.
+Understanding type-casting is another core concept in helping to leverage `Dotyaml` so  your app get what it needs to run.
 
 > ### Core Concept: type-casting {: .info}
 >
-> For each variable you read via `Dotenvy.env!/2` in `config/runtime.exs`, you
+> For each variable you read via `Dotyaml.env!/2` in `config/runtime.exs`, you
 > should consider what the resulting Elixir value needs to be. Can the value be empty? Are
-> `nil` values allowed? Choose the [conversion type](`t:Dotenvy.Transformer.conversion_type/0`)
+> `nil` values allowed? Choose the [conversion type](`t:Dotyaml.Transformer.conversion_type/0`)
 > that best supplies your app with the value it needs.
 
-See the section on [releases](docs/guides/releases.md) for further information on how `Dotenvy` works in the context of a Mix release.
+See the section on [releases](docs/guides/releases.md) for further information on how `Dotyaml` works in the context of a Mix release.

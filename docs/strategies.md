@@ -1,6 +1,6 @@
 # Strategies
 
-Although there are other places where `Dotenvy` may prove useful, it was designed with the `config/runtime.exs` in mind: most of the following use-cases will focus on that because it offers a clean and declarative way to load up the necessary variables.
+Although there are other places where `Dotyaml` may prove useful, it was designed with the `config/runtime.exs` in mind: most of the following use-cases will focus on that because it offers a clean and declarative way to load up the necessary variables.
 
 ## Dotenv for Dev and Prod
 
@@ -28,7 +28,7 @@ migration_timestamps: [
 
 ```elixir
 import Config
-import Dotenvy
+import Dotyaml
 
 source([".env", System.get_env()])
 
@@ -94,7 +94,7 @@ migration_timestamps: [
 
 ```elixir
 import Config
-import Dotenvy
+import Dotyaml
 
 source([".env", ".env.\#{config_env()}", System.get_env()])
 
@@ -135,14 +135,14 @@ The above setup would likely commit the `.env.test` file so it was sure to overr
 The `.env.test` file is loaded when running tests, so its values override any of the
 values set in the `.env`.
 
-By using `Dotenvy.env!/2`, a strong contract is created with the environment: the
+By using `Dotyaml.env!/2`, a strong contract is created with the environment: the
 system running this app _must_ have the designated environment variables set somehow,
 otherwise this app will not start (and a specific error will be raised).
 
 Using the nil-able variants of the type-casting (those ending with `?`) is an easy
 way to fall back to `nil` when the variable contains an empty string: `env!("POOL", :module?)` requires that the `POOL` variable is set, but it will return a `nil` if the value is an empty string.
 
-See `Dotenvy.Transformer` for more details.
+See `Dotyaml.Transformer` for more details.
 
 ## Releases
 
@@ -179,7 +179,7 @@ We can use the presence of the `RELEASE_ROOT` to determine a directory prefix fo
 
 ```elixir
 import Config
-import Dotenvy
+import Dotyaml
 
 # For local development, read dotenv files inside the envs/ dir;
 # for releases, read them at the RELEASE_ROOT

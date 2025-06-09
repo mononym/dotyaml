@@ -15,7 +15,7 @@ source!([
   ])
 ```
 
-Now your Livebooks can install apps using `Dotenvy` as you would other applications. In your Livebook setup, include a `Mix.install/2` block like the following:
+Now your Livebooks can install apps using `Dotyaml` as you would other applications. In your Livebook setup, include a `Mix.install/2` block like the following:
 
 ```elixir
 Mix.install(

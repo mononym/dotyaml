@@ -83,7 +83,7 @@ Your `runtime.exs` can include whatever it needs to, i.e. all the application co
 
 ```elixir
 import Config
-import Dotenvy
+import Dotyaml
 
 env_dir_prefix = System.get_env("RELEASE_ROOT") || Path.expand("./envs")
 

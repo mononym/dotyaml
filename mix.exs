@@ -1,13 +1,13 @@
-defmodule Dotenvy.MixProject do
+defmodule Dotyaml.MixProject do
   use Mix.Project
 
-  @source_url "https://github.com/fireproofsocks/dotenvy"
-  @version "1.1.0"
+  @source_url "https://github.com/mononym/dotyaml"
+  @version "1.0.0"
 
   def project do
     [
-      app: :dotenvy,
-      name: "Dotenvy",
+      app: :dotyaml,
+      name: "Dotyaml",
       description: description(),
       version: @version,
       elixir: "~> 1.13",
@@ -23,7 +23,6 @@ defmodule Dotenvy.MixProject do
         main: "readme",
         source_ref: "v#{@version}",
         source_url: @source_url,
-        logo: "assets/logo.png",
         extras: extras(),
         groups_for_extras: groups_for_extras(),
         skip_undefined_reference_warnings_on: ["CHANGELOG.md"]
@@ -112,7 +111,9 @@ defmodule Dotenvy.MixProject do
       {:dialyxir, "~> 1.4", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.37", only: :dev, runtime: false},
       {:excoveralls, "~> 0.18", only: [:dev, :test], runtime: false},
-      {:mox, "~> 1.2", only: [:test]}
+      {:mox, "~> 1.2", only: [:test]},
+      {:yaml_elixir, "~> 2.11"},
+      {:deep_merge, "~> 1.0"}
     ]
   end
 end

@@ -1,6 +1,6 @@
 # Cheatsheet
 
-Quick reference for using `Dotenvy`.
+Quick reference for using `Dotyaml`.
 
 ## Setup
 {: .col-3}
@@ -53,7 +53,7 @@ end
 ### Runtime Config
 
 Your `config/runtime.exs` is where you source your environment variables. 
-The last argument to `Dotenvy.source/2` or `Dotenvy.source!/2` takes precedence.
+The last argument to `Dotyaml.source/2` or `Dotyaml.source!/2` takes precedence.
 It's common to use `System.get_env()` as the final argument so any existing system
 environment variables will take precedence over anything parsed from the `.env` files.
 
@@ -61,7 +61,7 @@ environment variables will take precedence over anything parsed from the `.env` 
 
 ```elixir
 import Config
-import Dotenvy
+import Dotyaml
 
 env_dir = System.get_env("RELEASE_ROOT") || Path.expand("./envs/")
   
@@ -112,7 +112,7 @@ PG_SSL=false
 
 ```
 import Config
-import Dotenvy
+import Dotyaml
 
 env_dir = System.get_env("RELEASE_ROOT") || Path.expand("./envs")
   
@@ -138,7 +138,7 @@ config :my_app, MyApp.PGRepo,
 System Environment variables are always stored as strings which may need to be 
 transformed into native Elixir data types.
 
-#### Used as the 2nd argument to `Dotenvy.env!/2` and `Dotenvy.env!/3`
+#### Used as the 2nd argument to `Dotyaml.env!/2` and `Dotyaml.env!/3`
 
 | Conversion Type   | Elixir Type   | On Empty String   |
 | --                | --            | --                |
@@ -189,7 +189,7 @@ config :feenix, FeenixWeb.Endpoint,
     ],
 ```
 
-Your custom functions can raise a `Dotenvy.Error` to benefit from improved messages
+Your custom functions can raise a `Dotyaml.Error` to benefit from improved messages
 that include helpful context about any problems, e.g.
 
 ```elixir
@@ -197,7 +197,7 @@ strict_boolean! = fn
   "true" -> true
   "false" -> false
   _ ->
-    raise Dotenvy.Error,
+    raise Dotyaml.Error,
       message: "strict_boolean! values must be either true or false"
 end
 

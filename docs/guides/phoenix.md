@@ -2,19 +2,19 @@
 
 This page shows you how to either generate a new Phoenix application using the [`dotenvy_generators` package](docs/reference/generators.md) OR how to retrofit the config files of an existing Phoenix app.
 
-## Creating a new Phoenix application that uses Dotenvy
+## Creating a new Phoenix application that uses Dotyaml
 
 Make sure you have installed the [`dotenvy_generators`](docs/reference/generators.md) before continuing!
 
-In a new terminal window, you can run the new task to generate a new Phoenix app, e.g. `mix phx.new.dotenvy hello`.  This should generate a functional Phoenix application that leverages `Dotenvy` for its configuration.
+In a new terminal window, you can run the new task to generate a new Phoenix app, e.g. `mix phx.new.dotenvy hello`.  This should generate a functional Phoenix application that leverages `Dotyaml` for its configuration.
 
 Have a look over the file structure: notice the `envs/` directory.  The files there house the values read at _runtime_, whereas the various config files inside of `config/` have been cleaned up so they focus on providing settings that must be defined at compile-time.
 
 ## Manually Editing Files
 
-If you have an existing Phoenix application and you want to modify it to use `Dotenvy`, then you can reference the files below as a guideline for editing your configuration files.
+If you have an existing Phoenix application and you want to modify it to use `Dotyaml`, then you can reference the files below as a guideline for editing your configuration files.
 
-Pay attention to how the files are organized: most of the configuration has been moved into the `runtime.exs` leaving only minimal bits in the env-specific compile-time configs. Remember that one of the guiding principles of `Dotenvy` is to use runtime configuration whenever possible.
+Pay attention to how the files are organized: most of the configuration has been moved into the `runtime.exs` leaving only minimal bits in the env-specific compile-time configs. Remember that one of the guiding principles of `Dotyaml` is to use runtime configuration whenever possible.
 
 > ### Replace the values to match your app {: .warning}
 >
@@ -154,7 +154,7 @@ config :logger, level: :info
 ```elixir
 # config/runtime.exs
 import Config
-import Dotenvy
+import Dotyaml
 
 # For local development, read dotenv files inside the envs/ dir;
 # for releases, read them at the RELEASE_ROOT

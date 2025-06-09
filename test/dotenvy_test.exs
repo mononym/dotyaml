@@ -1,7 +1,7 @@
-defmodule DotenvyTest do
+defmodule DotyamlTest do
   use ExUnit.Case, async: true
 
-  import Dotenvy
+  import Dotyaml
   import Mox
 
   setup :verify_on_exit!
@@ -37,7 +37,7 @@ defmodule DotenvyTest do
       end
     end
 
-    test "raising Dotenvy.Error with custom message converts to RuntimeError", %{test: test} do
+    test "raising Dotyaml.Error with custom message converts to RuntimeError", %{test: test} do
       System.put_env("TEST_VALUE", "#{test}")
       source([System.get_env()])
 
@@ -45,7 +45,7 @@ defmodule DotenvyTest do
         env!(
           "TEST_VALUE",
           fn _ ->
-            raise Dotenvy.Error, message: "Custom error"
+            raise Dotyaml.Error, message: "Custom error"
           end,
           "default"
         )
@@ -84,13 +84,13 @@ defmodule DotenvyTest do
       end
     end
 
-    test "raising Dotenvy.Error with custom message converts to RuntimeError", %{test: test} do
+    test "raising Dotyaml.Error with custom message converts to RuntimeError", %{test: test} do
       System.put_env("TEST_VALUE", "#{test}")
       source([System.get_env()])
 
       assert_raise RuntimeError, ~r/Custom error/, fn ->
         env!("TEST_VALUE", fn _ ->
-          raise Dotenvy.Error, message: "Custom error"
+          raise Dotyaml.Error, message: "Custom error"
         end)
       end
     end

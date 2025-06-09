@@ -1,3 +1,3 @@
 ExUnit.start(exclude: [:skip])
 
-Mox.defmock(ParserMock, for: Dotenvy)
+Mox.defmock(ParserMock, for: Dotyaml)
